@@ -21,7 +21,12 @@ feature 'The game can be set up' do
   end
 
   scenario 'and can change turns' do
-    game.change_turn
+    game.turn_change
+    expect(game.turn).to eq player_2
+  end
+
+  scenario 'and it change turn after a move has been made' do
+    game.make_move
     expect(game.turn).to eq player_2
   end
 end

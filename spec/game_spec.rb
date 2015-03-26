@@ -18,4 +18,9 @@ describe Game do
     game.turn_change
     expect(game.turn).to eq player_2
   end
+
+  it 'switch turn after a move has been made' do
+    game.make_move
+    expect(game.turn).to eq player_2
+  end
 end

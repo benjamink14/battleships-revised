@@ -7,4 +7,8 @@ class Game
     @player_2 = player_2
     @turn = @player_1
   end
+
+  def turn_change
+    @turn == @player1 ? @turn = @player_1 : @turn = @player_2
+  end
 end
