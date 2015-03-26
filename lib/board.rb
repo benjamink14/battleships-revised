@@ -38,6 +38,7 @@ class Board
   end
 
   def place_shot(coordinate)
+    fail 'Shot placed out of bounds' if @grid[coordinate].nil?
     @grid[coordinate].hit
   end
 

@@ -16,4 +16,9 @@ describe Cell do
     subject.hit
     expect(subject).to be_hit
   end
+
+  it 'can not be hit twice' do
+    subject.hit
+    expect { subject.hit }.to raise_error 'Cell has already been hit'
+  end
 end

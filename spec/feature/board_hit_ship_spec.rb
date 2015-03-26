@@ -18,4 +18,13 @@ feature 'Board hitting ships' do
     board.place_shot('A1')
     expect(ship.hit_count).to eq(1)
   end
+
+  scenario 'Error raised when placing shot on already hit cell' do
+    board.place_shot('A1')
+    expect { board.place_shot('A1') }.to raise_error 'Cell has already been hit'
+  end
+
+  scenario 'Error raised when placing shot out of bounds' do
+    expect { board.place_shot('A9') }.to raise_error 'Shot placed out of bounds'
+  end
 end

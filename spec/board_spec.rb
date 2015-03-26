@@ -84,10 +84,7 @@ describe Board do
     expect(board.grid['A1'].content.hit_count).to eq(1)
   end
 
-  it 'cannot place a shot on a cell that was already hit' do
-
-  end
-
   it 'cannot place a shot out of bounds' do
+    expect { board.place_shot('A9') }.to raise_error 'Shot placed out of bounds'
   end
 end

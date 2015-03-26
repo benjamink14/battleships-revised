@@ -14,6 +14,7 @@ class Cell
   end
 
   def hit
+    fail 'Cell has already been hit' if @hit
     @hit = true
     @content.hit unless @content.nil?
   end
