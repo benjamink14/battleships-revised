@@ -8,6 +8,7 @@ class Board
   end
 
   def place_ship_horizontally(ship, coordinate) #rubocop: disable all
+    chech_ship_not_placed(ship)
     check_placement_horizontal(ship, coordinate)
     (1..ship.length).each do |i|
       new_coordinate = coordinate[0] + (coordinate[1].to_i + i - 1).to_s
@@ -16,6 +17,7 @@ class Board
   end
 
   def place_ship_vertically(ship, coordinate) #rubocop: disable all
+    chech_ship_not_placed(ship)
     check_placement_vertical(ship, coordinate)
     (0..ship.length - 1).each do |i|
       new_letter = (coordinate[0].downcase.ord + i).chr.upcase
@@ -26,7 +28,7 @@ class Board
 
   def print_nice # rubocop: disable all
     # Works only for 1 digit size
-    (0..@dimension.to_i - 1).each do |row|
+    (0..@dimensions.to_i - 1).each do |row|
       (1..@dimensions[0].to_i).each do |column|
         coordinate = (row + 97).chr.upcase.to_s + column.to_s
         print coordinate + ': ' + grid[coordinate].content.class.to_s + ' '
@@ -49,6 +51,12 @@ class Board
       new_letter = (coordinate[0].downcase.ord + i).chr.upcase
       new_coordinate = new_letter + coordinate[1]
       fail 'Ship placed out of bounds' if @grid[new_coordinate].nil?
+    end
+  end
+
+  def chech_ship_not_placed(ship)
+    @grid.each_value do |cell|
+      fail 'Ship already placed' if cell.content == ship
     end
   end
 

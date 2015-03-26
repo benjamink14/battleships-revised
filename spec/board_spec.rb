@@ -8,7 +8,7 @@ describe Board do
   before(:each) do
     allow(cell).to receive(:new).and_return(cell)
     allow(cell).to receive(:fill)
-    allow(cell).to receive(:content).and_return(ship)
+    allow(cell).to receive(:content)
   end
 
   it 'is created with a default capacity of 2x1' do
@@ -34,11 +34,13 @@ describe Board do
   # What's the point of this test? Would work without line 36
   it 'can place a ship on its grid horizontally' do
     board.place_ship_horizontally ship, 'A1'
+    allow(cell).to receive(:content).and_return(ship)
     expect(board.grid['A2'].content).to eq ship
   end
 
   it 'can place a ship on its grid vertically' do
     board.place_ship_vertically ship, 'A1'
+    allow(cell).to receive(:content).and_return(ship)
     expect(board.grid['B2'].content).to eq ship
   end
 
@@ -51,6 +53,7 @@ describe Board do
   it 'raise error when placing ship twice' do
     err_msg = 'Ship already placed'
     board.place_ship_horizontally ship, 'A1'
+    allow(cell).to receive(:content).and_return(ship)
     expect { board.place_ship_horizontally ship, 'B1' }.to raise_error err_msg
   end
 
