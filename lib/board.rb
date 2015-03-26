@@ -25,7 +25,8 @@ class Board
   end
 
   def print_nice # rubocop: disable all
-    (0..@dimensions[0].to_i - 1).each do |row|
+    # Works only for 1 digit size
+    (0..@dimension.to_i - 1).each do |row|
       (1..@dimensions[0].to_i).each do |column|
         coordinate = (row + 97).chr.upcase.to_s + column.to_s
         print coordinate + ': ' + grid[coordinate].content.class.to_s + ' '

@@ -1,6 +1,7 @@
 require 'board'
 
 describe Board do
+  let(:ship) { double :ship, size: 3 }
   let(:cell) { double :cell }
   let(:board) { Board.new cell }
 
@@ -26,5 +27,15 @@ describe Board do
   end
 
   # D:
-  xit 'can place a ship on its grid'
+  # Ideally ship is also tested not to be in any other squares
+  it 'can place a ship on its grid horizontally' do
+    board.place_ship_horizontally ship, 'A1'
+    expect(board.grid['A3'].content).to eq ship
+  end
+
+  xit 'cannot place ships out of bounds'
+
+  xit 'raise error when placing ship twice'
+
+  xit 'raise error when overlap'
 end
