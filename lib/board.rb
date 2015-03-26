@@ -4,6 +4,7 @@ class Board
   def initialize(dim = 2, cell)
     @empty = true
     @dimensions = dim.to_s + 'x' + dim.to_s
+    @all_ships_sunk = false
     init_grid_with_dimensions(dim, cell)
   end
 
@@ -47,7 +48,7 @@ class Board
 
   def check_if_all_ships_sunk
     @grid.each_value do |cell|
-      @all_ships_sunk = false if cell.content.sunk == false
+      @all_ships_sunk = true if cell.content && cell.content.sunk
     end
   end
 

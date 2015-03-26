@@ -65,7 +65,6 @@ describe Board do
   it 'raise error when overlap' do
     board.place_ship_horizontally ship, 'A1'
     allow(cell).to receive(:content).and_return(ship)
-    board.print_nice
     err_msg = 'Can not place ship; overlap'
     expect { board.place_ship_vertically ship2, 'A1' }.to raise_error err_msg
   end
@@ -91,12 +90,10 @@ describe Board do
   end
 
   it 'knows when all ships have been sunk' do
-    board.place_ship_horizontally ship, 'A1'
-    board.place_ship_horizontally ship2, 'B1'
+    allow(cell).to receive(:content).and_return(ship)
+    allow(ship).to receive(:sunk).and_return(true)
     board.place_shot 'A1'
     board.place_shot 'A2'
-    board.place_shot 'B1'
-    board.place_shot 'B2'
-    expect(board.all_ships_sunk).to eq true
+    expect(board.all_ships_sunk).to eq(true)
   end
 end

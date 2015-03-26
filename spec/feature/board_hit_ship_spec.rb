@@ -43,6 +43,6 @@ feature 'Board hitting ships' do
     board.place_shot 'A2'
     board.place_shot 'B1'
     board.place_shot 'B2'
-    expect(subject.all_ships_sunk).to eq true
+    expect(board.all_ships_sunk).to eq true
   end
 end
