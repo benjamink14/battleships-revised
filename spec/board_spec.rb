@@ -54,8 +54,21 @@ describe Board do
     err_msg = 'Ship already placed'
     board.place_ship_horizontally ship, 'A1'
     allow(cell).to receive(:content).and_return(ship)
+    allow(ship).to receive(:is_a?).and_return(Ship)
     expect { board.place_ship_horizontally ship, 'B1' }.to raise_error err_msg
   end
 
-  xit 'raise error when overlap'
+  it 'raise error when overlap' do
+    ship2 = double :ship2, length: 2
+    board.place_ship_horizontally ship, 'A1'
+    allow(cell).to receive(:content).and_return(ship)
+    board.print_nice
+    err_msg = 'Can not place ship; overlap'
+    expect { board.place_ship_vertically ship2, 'A1' }.to raise_error err_msg
+  end
+
+  it 'can place a shot on a cell' do
+    board.place_shot('A1')
+    expect(board.grid['A1']).to be_hit
+  end
 end

@@ -39,18 +39,21 @@ class Board
 
   private
 
-  def check_placement_horizontal(ship, coordinate)
+  def check_placement_horizontal(ship, coordinate) # rubocop: disable all
     (0..ship.length - 1).each do |i|
       new_coordinate = coordinate[0] + (coordinate[1].to_i + i).to_s
       fail 'Ship placed out of bounds' if @grid[new_coordinate].nil?
+      err_msg = 'Can not place ship; overlap'
+      fail err_msg if @grid[new_coordinate].content.is_a? Ship
     end
   end
 
-  def check_placement_vertical(ship, coordinate)
+  def check_placement_vertical(ship, coordinate) # rubocop: disable all
     (0..ship.length - 1).each do |i|
       new_letter = (coordinate[0].downcase.ord + i).chr.upcase
       new_coordinate = new_letter + coordinate[1]
       fail 'Ship placed out of bounds' if @grid[new_coordinate].nil?
+      fail 'Can not place ship; overlap' if @grid[new_coordinate].content
     end
   end
 

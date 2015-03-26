@@ -8,10 +8,6 @@ feature 'Board placing ships' do
   let(:ship) { Ship.new 2 }
   let(:board) { Board.new 4, cell.class }
 
-  # before(:each) do
-  #
-  # end
-
   scenario 'Board has a Cell in each square of its grid' do
     board.grid.each_value do |square|
       expect(square.class).to be cell.class
@@ -44,5 +40,11 @@ feature 'Board placing ships' do
   scenario 'Error raised when ship placed vertically out of bounds' do
     err_msg = 'Ship placed out of bounds'
     expect { board.place_ship_vertically(ship, 'D4') }.to raise_error err_msg
+  end
+
+  scenario 'Error raised when ship placed overlapping another ship' do
+    err_msg = 'Can not place ship; overlap'
+    board.place_ship_horizontally(Ship.new, 'A1')
+    expect { board.place_ship_vertically(ship, 'A1') }.to raise_error err_msg
   end
 end
