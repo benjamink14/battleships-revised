@@ -68,7 +68,26 @@ describe Board do
   end
 
   it 'can place a shot on a cell' do
+    allow(cell).to receive(:hit)
     board.place_shot('A1')
+    allow(cell).to receive(:hit?).and_return(true)
     expect(board.grid['A1']).to be_hit
+  end
+
+  it 'hits ship when the cell is hit' do
+    board.place_ship_horizontally ship, 'A1'
+    allow(cell).to receive(:content).and_return(ship)
+    allow(cell).to receive(:hit)
+    board.place_shot('A1')
+    allow(ship).to receive(:hit_count).and_return(1)
+    allow(cell).to receive(:hit?).and_return(true)
+    expect(board.grid['A1'].content.hit_count).to eq(1)
+  end
+
+  it 'cannot place a shot on a cell that was already hit' do
+
+  end
+
+  it 'cannot place a shot out of bounds' do
   end
 end

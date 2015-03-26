@@ -13,5 +13,9 @@ feature 'Board hitting ships' do
     expect(board.grid['A1']).to be_hit
   end
 
-  xscenario 'Ship hit when blablabla'
+  scenario 'Ship hit when cell is hit' do
+    board.place_ship_horizontally ship, 'A1'
+    board.place_shot('A1')
+    expect(ship.hit_count).to eq(1)
+  end
 end

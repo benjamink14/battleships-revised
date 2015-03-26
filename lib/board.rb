@@ -37,6 +37,10 @@ class Board
     end
   end
 
+  def place_shot(coordinate)
+    @grid[coordinate].hit
+  end
+
   private
 
   def check_placement_horizontal(ship, coordinate) # rubocop: disable all
