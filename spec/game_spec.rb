@@ -13,4 +13,9 @@ describe Game do
   it 'starts with player 1 turn' do
     expect(game.turn).to eq player_1
   end
+
+  it 'can change turns' do
+    game.turn_change
+    expect(game.turn).to eq player_2
+  end
 end

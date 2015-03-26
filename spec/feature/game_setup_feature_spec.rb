@@ -11,8 +11,17 @@ feature 'The game can be set up' do
   let(:player_1) { Player.new board1 }
   let(:player_2) { Player.new board2 }
 
-  it 'has two players when created' do
+  scenario 'and has two players when created' do
     expect(game.player_1).to eq player_1
     expect(game.player_2).to eq player_2
+  end
+
+  scenario 'starts with player 1\'s turn' do
+    expect(game.turn).to eq player_1
+  end
+
+  scenario 'and can change turns' do
+    game.change_turn
+    expect(game.turn).to eq player_2
   end
 end
