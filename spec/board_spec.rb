@@ -1,12 +1,14 @@
 require 'board'
 
 describe Board do
-  let(:ship) { double :ship, size: 3 }
+  let(:ship) { double :ship, length: 2 }
   let(:cell) { double :cell }
   let(:board) { Board.new cell }
 
   before(:each) do
     allow(cell).to receive(:new).and_return(cell)
+    allow(cell).to receive(:fill)
+    allow(cell).to receive(:content).and_return(ship)
   end
 
   it 'is created with a default capacity of 2x1' do
@@ -28,14 +30,29 @@ describe Board do
 
   # D:
   # Ideally ship is also tested not to be in any other squares
+
+  # What's the point of this test? Would work without line 36
   it 'can place a ship on its grid horizontally' do
     board.place_ship_horizontally ship, 'A1'
-    expect(board.grid['A3'].content).to eq ship
+    expect(board.grid['A2'].content).to eq ship
   end
 
-  xit 'cannot place ships out of bounds'
+  it 'can place a ship on its grid vertically' do
+    board.place_ship_vertically ship, 'A1'
+    expect(board.grid['B2'].content).to eq ship
+  end
 
-  xit 'raise error when placing ship twice'
+  it 'cannot place ships out of bounds' do
+    err_msg = 'Ship placed out of bounds'
+    expect { board.place_ship_horizontally ship, 'B2' }.to raise_error err_msg
+    expect { board.place_ship_vertically ship, 'C2' }.to raise_error err_msg
+  end
+
+  it 'raise error when placing ship twice' do
+    err_msg = 'Ship already placed'
+    board.place_ship_horizontally ship, 'A1'
+    expect { board.place_ship_horizontally ship, 'B1' }.to raise_error err_msg
+  end
 
   xit 'raise error when overlap'
 end
