@@ -1,6 +1,6 @@
 # Board
 class Board
-  attr_reader :dimensions, :grid
+  attr_reader :dimensions, :grid, :all_ships_sunk
   def initialize(dim = 2, cell)
     @empty = true
     @dimensions = dim.to_s + 'x' + dim.to_s
@@ -40,9 +40,16 @@ class Board
   def place_shot(coordinate)
     fail 'Shot placed out of bounds' if @grid[coordinate].nil?
     @grid[coordinate].hit
+    check_if_all_ships_sunk
   end
 
   private
+
+  def check_if_all_ships_sunk
+    @grid.each_value do |cell|
+      @all_ships_sunk = false if cell.content.sunk == false
+    end
+  end
 
   def check_placement_horizontal(ship, coordinate) # rubocop: disable all
     (0..ship.length - 1).each do |i|

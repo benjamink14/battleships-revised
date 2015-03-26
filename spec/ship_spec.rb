@@ -9,4 +9,10 @@ describe Ship do
     ship = Ship.new 4
     expect(ship.length).to eq 4
   end
+
+  it 'is sunk after being hit appropriate number of times' do
+    subject.hit
+    expect(subject.hit).to eq 'SUNK!'
+    expect(subject).to be_sunk
+  end
 end

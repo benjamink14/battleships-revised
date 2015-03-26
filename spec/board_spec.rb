@@ -2,6 +2,7 @@ require 'board'
 
 describe Board do
   let(:ship) { double :ship, length: 2 }
+  let(:ship2) { double :ship2, length: 2 }
   let(:cell) { double :cell }
   let(:board) { Board.new cell }
 
@@ -9,6 +10,9 @@ describe Board do
     allow(cell).to receive(:new).and_return(cell)
     allow(cell).to receive(:fill)
     allow(cell).to receive(:content)
+    allow(cell).to receive(:hit)
+    allow(ship).to receive(:sunk).and_return(false)
+    allow(ship2).to receive(:sunk).and_return(false)
   end
 
   it 'is created with a default capacity of 2x1' do
@@ -59,7 +63,6 @@ describe Board do
   end
 
   it 'raise error when overlap' do
-    ship2 = double :ship2, length: 2
     board.place_ship_horizontally ship, 'A1'
     allow(cell).to receive(:content).and_return(ship)
     board.print_nice
@@ -77,7 +80,6 @@ describe Board do
   it 'hits ship when the cell is hit' do
     board.place_ship_horizontally ship, 'A1'
     allow(cell).to receive(:content).and_return(ship)
-    allow(cell).to receive(:hit)
     board.place_shot('A1')
     allow(ship).to receive(:hit_count).and_return(1)
     allow(cell).to receive(:hit?).and_return(true)
@@ -86,5 +88,15 @@ describe Board do
 
   it 'cannot place a shot out of bounds' do
     expect { board.place_shot('A9') }.to raise_error 'Shot placed out of bounds'
+  end
+
+  it 'knows when all ships have been sunk' do
+    board.place_ship_horizontally ship, 'A1'
+    board.place_ship_horizontally ship2, 'B1'
+    board.place_shot 'A1'
+    board.place_shot 'A2'
+    board.place_shot 'B1'
+    board.place_shot 'B2'
+    expect(board.all_ships_sunk).to eq true
   end
 end
